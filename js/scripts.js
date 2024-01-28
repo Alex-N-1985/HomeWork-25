@@ -8,7 +8,7 @@ container.appendChild(header);
 
 let drinkOrders = [
     new Liquor(drinks[0].name, drinks[0].cookTime, drinks[0].price),
-    new Liquor( drinks[1].name, drinks[1].cookTime,  drinks[1].price)
+    new Liquor( drinks[2].name, drinks[2].cookTime,  drinks[2].price)
 ];
 
 drinkOrders[0].addIngridient(new DopIngrid(addIngrid[0].name, addIngrid[0].cookTime, addIngrid[0].price), 2);
