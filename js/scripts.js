@@ -6,10 +6,14 @@ header.innerText = "Таверна Пьяный Дракон";
 
 container.appendChild(header);
 
-let drinkOrders = [drinks[0], drinks[1]];
-drinkOrders[0].addIngridient[addIngrid[0], 2];
-drinkOrders[1].addIngridient[addIngrid[0], 1];
-drinkOrders[1].addIngridient[addIngrid[1], 1];
+let drinkOrders = [
+    new Liquor(drinks[0].name, drinks[0].cookTime, drinks[0].price),
+    new Liquor( drinks[1].name, drinks[1].cookTime,  drinks[1].price)
+];
+
+drinkOrders[0].addIngridient(new DopIngrid(addIngrid[0].name, addIngrid[0].cookTime, addIngrid[0].price), 2);
+drinkOrders[1].addIngridient(new DopIngrid(addIngrid[0].name, addIngrid[0].cookTime, addIngrid[0].price), 1);
+drinkOrders[1].addIngridient(new DopIngrid(addIngrid[1].name, addIngrid[1].cookTime, addIngrid[1].price), 1);
 
 for (let i = 0; i < drinkOrders.length; i++){
     container.innerHTML += "<p>" + drinkOrders[i].toString() + "</p>";

@@ -3,24 +3,27 @@ class Liquor {
         this.name = name;
         this.cookTime = cookTime;
         this.price = price;
-        this.additIngrid = [];
+        this.additIngrid = new Array();
     }
 
     toString(){
         let output = this.name + " \nВремя приготовления: " + this.cookTime + "мин \nЦена: " + this.price + "руб.\n";
         if (this.additIngrid.length > 0){
-            for (let i = 0; i > this.additIngrid.length; i++){
-                output += this.additIngrid.name + "\n";
+            output += "Дополнительные ингридиенты:\n";
+            for (let i = 0; i < this.additIngrid.length; i++){
+                output += this.additIngrid[i].name + ", \n";
             }
         }
         return output;
     }
 
     addIngridient(ingridient, number){
+        let index = this.additIngrid.length;
         for (let i = 0; i < number; i++){
-            this.additIngrid[this.additIngrid.length] = ingridient;
+            this.additIngrid[index] = ingridient;
             this.cookTime += ingridient.cookTime;
             this.price += ingridient.price;
+            index++;
         }
     }
 }
