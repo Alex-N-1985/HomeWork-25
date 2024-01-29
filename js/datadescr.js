@@ -144,6 +144,24 @@ function randomNumber(min, max){
     return Math.round(Math.random() * (max - min) + min);
 }
 
+function isUserTakeMoreDrinks(){
+    let num = randomNumber(0, 10);
+    if (num >= 0 && num <= 3) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function isUserTakeAdditIngrid(){
+    let num = randomNumber(0, 10);
+    if (num >= 0 && num <= 2) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 const drinks = [
     new Liquor("Чай черный", 5, 10),
     new Liquor("Кофе натуральный", 5, 15),
