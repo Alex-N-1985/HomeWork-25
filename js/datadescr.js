@@ -111,6 +111,33 @@ class monthReport {
         }
         return num;
     }
+
+    getMonthReportData(){
+        let reportData = {
+            month: this.monthName,
+            numOrders: this.numOrders
+        };
+        let numData = 0, drinksData = {};
+        for (let i = 0; i < drinks.length; i++){
+            numData = this.countDrinkInList(drinks[i].name);
+            drinksData[drinks[i].name] = drinks[i].name;
+            drinksData["count"] = numData;
+            drinksData["totalCookTime"] = drinks[i].cookTime * numData;
+            drinksData["totalPrice"] = drinks[i].price * numData;
+        }
+        reportData["drinks"] = drinksData;
+        numData = 0;
+        let dopIngrData = {};
+        for (let i = 0; i < addIngrid.length; i++){
+            numData = this.countDopIngridInList(addIngrid[i].name);
+            dopIngrData[addIngrid[i].name] = addIngrid[i].name;
+            dopIngrData["count"] = numData;
+            dopIngrData["totalCookTime"] = addIngrid[i].cookTime * numData;
+            dopIngrData["totalPrice"] = addIngrid[i].price * numData;
+        }
+        reportData["dopIngrid"] = dopIngrData;
+        return reportData;
+    }
 }
 
 function randomNumber(min, max){
