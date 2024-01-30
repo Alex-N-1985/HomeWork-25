@@ -144,7 +144,7 @@ function randomNumber(min, max){
     return Math.round(Math.random() * (max - min) + min);
 }
 
-function isUserTakeMoreDrinks(){
+function isClientTakeMoreDrinks(){
     let num = randomNumber(0, 10);
     if (num >= 0 && num <= 3) {
         return true;
@@ -153,7 +153,7 @@ function isUserTakeMoreDrinks(){
     }
 }
 
-function isUserTakeAdditIngrid(){
+function isClientTakeAdditIngrid(){
     let num = randomNumber(0, 10);
     if (num >= 0 && num <= 2) {
         return true;
