@@ -216,4 +216,4 @@ const days = 365,
     minClients = 20,
     maxClients = 100,
     workTimeHours = 15,
-    numEmployers = 10;
+    numEmployers = 1;
