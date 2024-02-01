@@ -13,24 +13,32 @@ let mins = numEmployers * workTimeHours * 60,
     liqIndex = -1,
     ingrIndex = -1, 
     clients = 0;
-let monthReps = new Array(),
-    drink = null,
-    dopIngrid = null;
-for (let i = 0; i < monthes.length; i++){
-    monthReps[i] = new monthReport(monthes[i].name);
-    for (let j = 1; j <= monthes[i].days; j++){
-        sumMins = 0;
-        clients = randomNumber(20, 100);
-        while (sumMins < mins || clients > 0){            
-            if (isClientTakeMoreDrinks()){
-                numDrinks = randomNumber(2, 3);
-            } else {
-                numDrinks = 1;
-            }
-            if (isClientTakeAdditIngrid()){
-                ingrIndex = randomNumber(0, 9);
-            }
-            
-        }
-    }
+let monthReps = null,
+    _drinks = null,
+    _dopIngrid = null;
+
+let order = null;
+
+clients = randomNumber(20, 100);
+if (isClientTakeMoreDrinks()){
+    numDrinks = randomNumber(2, 3);
+} else {
+    numDrinks = 1;
 }
+
+if (isClientTakeAdditIngrid()){
+    ingrIndex = randomNumber(0, addIngrid.length - 1);
+    _dopIngrid = new DopIngrid(addIngrid[ingrIndex].name, addIngrid[ingrIndex].cookTime, addIngrid[ingrIndex].price);    
+}
+
+_drinks = new Array();
+for (let i = 0; i < numDrinks; i++){
+    liqIndex = randomNumber(0, drinks.length);
+    _drinks[i] = new Liquor(drinks[liqIndex].name, drinks[liqIndex].cookTime, drinks[liqIndex].price);
+}
+order = new Order(_drinks, new Array(_dopIngrid));
+
+container += "<p>" + order.toString() + "</p>";
+
+/* Ошибки в добавлении дополнительного ингридиента в заказ (order),
+ добавляется пустой объект, когда выпадает ситуация "без дополн. ингридиентов" */
