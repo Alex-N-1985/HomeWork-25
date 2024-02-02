@@ -25,24 +25,28 @@ class DopIngrid {
 }
 
 class Order {
-    constructor(drinks, dopIngrids){
+    constructor(drinks, dopIngrid){
         this.drinks = new Array();
-        this.dopIngrids = new Array();
-        for (let i = 0; i < drinks.length; i++) {
-            this.drinks[i] = new Liquor(drinks[i].name, drinks[i].cookTime, drinks[i].price);
+        if (dopIngrid !== null){
+            this.dopIngrid = new DopIngrid(dopIngrid.name, dopIngrid.cookTime, dopIngrid.price);
+        } else {
+            this.dopIngrid = null;
         }
-        for (let i = 0; i < dopIngrids.length; i++) {
-            this.dopIngrids[i] = new DopIngrid(dopIngrids[i].name, dopIngrids[i].cookTime, dopIngrids[i].price);
-        } 
+        if (drinks != null){
+            for (let i = 0; i < drinks.length; i++) {
+                this.drinks[i] = new Liquor(drinks[i].name, drinks[i].cookTime, drinks[i].price);
+            } 
+        }       
+        
     }
 
     calcPrice(){
         let totalPrice = 0;
         for (let i = 0; i < this.drinks.length; i++) {
-            this.totalPrice += this.drinks[i].price;
+            totalPrice += this.drinks[i].price;
         }
-        for (let i = 0; i < this.dopIngrids.length; i++){
-            this.totalPrice += this.dopIngrids[i].price;
+        if (this.dopIngrid != null) {
+            totalPrice += this.dopIngrids[i].price;
         }
         return totalPrice;
     }
@@ -50,10 +54,10 @@ class Order {
     calcTime(){
         let totalTime = 0;
         for (let i = 0; i < this.drinks.length; i++) {
-            this.totalTime += this.drinks[i].cookTime;
+            totalTime += this.drinks[i].cookTime;
         }
-        for (let i = 0; i < this.dopIngrids.length; i++){
-            this.totalTime += this.dopIngrids[i].cookTime;
+        if (this.dopIngrid != null){
+            totalTime += this.dopIngrid.cookTime;
         }
         return totalTime;
     }
@@ -63,9 +67,9 @@ class Order {
         for (let i = 0; i < this.drinks.length; i++){
             this.output += this.drinks[i].toString();
         }
-        for (let i = 0; i < this.dopIngrids.length; i++){
-            this.output += this.dopIngrids[i].toString();
-        }
+        if (this.dopIngrid != null) {
+            this.output += this.dopIngrid.toString();
+        }        
         return this.output;
     }
 }
@@ -78,18 +82,17 @@ class monthReport {
         this.numOrders = 0;
     }
 
-    addOrder(order){
-        this.numOrders += 1;
+    addOrder(order){        
         let index = this.drinks.length;
         for (let i = 0; i < order.drinks.length; i++){
             this.drinks[index] = new Liquor(order.drinks[i].name, order.drinks[i].cookTime, order.drinks[i].price);
             index++;
         }
-        index = order.dopIngrids.length;
-        for (let i = 0; i < order.dopIngrids.length; i++){
-            this.dopIngrids[index] = new DopIngrid(order.dopIngrids[i].name, order.dopIngrids[i].cookTime, order.dopIngrids[i].price);
-            index++;
+        if (order.dopIngrid != null){
+            index = this.dopIngrids.length;
+            this.dopIngrids[index] = new DopIngrid(order.dopIngrid.name, order.dopIngrid.cookTime, order.dopIngrid.price);
         }
+        this.numOrders += 1;
     }
 
     countDrinkInList(name){
@@ -110,6 +113,22 @@ class monthReport {
             }
         }
         return num;
+    }
+
+    getSumDrinksPrice(){
+        let sumPrice = 0;
+        for (let i = 0; i < this.drinks.length; i++){
+            sumPrice += this.drinks[i].price;
+        }
+        return sumPrice;
+    }
+
+    getSumDopIngridsPrice(){
+        let sumPrice = 0;
+        for (let i = 0; i < this.dopIngrids.length; i++){
+            sumPrice += this.dopIngrids[i].price;
+        }
+        return sumPrice;
     }
 
     getMonthReportData(){
@@ -137,6 +156,33 @@ class monthReport {
         }
         reportData["dopIngrid"] = dopIngrData;
         return reportData;
+    }
+
+    printMonthReport(){
+        let output = "<h3>" + this.monthName + "</h3>";
+        output += "<ul>";
+        output += "<li>Число заказов: " + this.numOrders + "</li>";
+        output += "<li>Число заказанных напитков: " + this.drinks.length + "</li>";
+        output += "<li><ul>";
+        for (let i = 0; i < drinks.length; i++){
+            output += "<li>" + drinks[i].name + ": ";
+            output += this.countDrinkInList(drinks[i].name);
+            output += "</li>";
+        }
+        output +="</ul></li>";
+        output += "<li>На сумму: " + this.getSumDrinksPrice() + " рублей.</li>";
+        output += "<li>Число заказанных дополнительных ингридиентов: " + this.dopIngrids.length + "</li>";
+        output += "<li><ul>";
+        for (let i = 0; i < addIngrid.length; i++){
+            output += "<li>" +addIngrid[i].name + ": ";
+            output += this.countDopIngridInList(addIngrid[i].name);
+            output += "</li>";
+        }
+        output +="</ul></li>";
+        output += "<li>На суммму: " + this.getSumDopIngridsPrice() + " рублей.</li>";
+        output += "<li>Общая выручка: " + (this.getSumDrinksPrice() + this.getSumDopIngridsPrice()) + " рублей.</li>"
+        output += "</ul>"
+        return output;
     }
 }
 
